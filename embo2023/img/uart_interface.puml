@@ -1,0 +1,26 @@
+@startuml
+!theme reddress-lightblue
+class Uart {
+  + bool send(const uint8_t*, size_t)
+  + size_t receive(uint8_t*, size_t)
+}
+
+class ILogSender {
+  + {abstract} bool send(const Log&)
+}
+
+
+class IHeightSender {
+  + {abstract} bool send(const Height&)
+}
+
+ILogSender <|-- Uart
+IHeightSender <|-- Uart
+
+class Sensor {
+  + Sensor(ILogSender*,IHeightSender*)
+}
+
+Sensor -- ILogSender
+Sensor -- IHeightSender
+@enduml
